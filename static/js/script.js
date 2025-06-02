@@ -1,12 +1,16 @@
-// Basic front-end validation and feedback for the contact form
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('contactForm');
-  if (form) {
-    form.addEventListener('submit', function (e) {
+// Handles smooth SPA navigation between sections
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.nav-link[data-target]').forEach(link => {
+    link.addEventListener('click', function(e) {
       e.preventDefault();
-      // You can integrate with an email API here
-      document.getElementById('formMessage').textContent = "Thank you for reaching out! I'll get back to you soon.";
-      form.reset();
+      // Switch section
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(this.getAttribute('data-target')).classList.add('active');
+      // Active nav
+      document.querySelectorAll('.nav-link[data-target]').forEach(nav => nav.classList.remove('active'));
+      this.classList.add('active');
     });
-  }
+  });
 });
+
+// javascript for loading next page
