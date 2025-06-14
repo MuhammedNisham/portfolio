@@ -77,8 +77,10 @@ header{
 
 /* styling for main */
 main{
+  all: unset !important;
+  display: block !important;
   margin-top: 8%;
-  color: white;
+  color: white !important;
   position: relative;
   min-height: 70vh;
 }
