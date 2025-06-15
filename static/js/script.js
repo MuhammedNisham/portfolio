@@ -74,11 +74,11 @@ window.addEventListener('resize', () => {
 animate();
 
 
-// SPA navigation
+// SPA navigation with blur transition
 document.addEventListener('DOMContentLoaded', function () {
   function loadPage(page, push = true) {
     const main = document.getElementById('main-content');
-    main.classList.add('fade-out');
+    main.classList.add('fade-blur-out');
     setTimeout(() => {
       fetch(`partials/${page}.html`)
         .then(res => {
@@ -87,12 +87,13 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(html => {
           main.innerHTML = html;
-          main.classList.remove('fade-out');
+          void main.offsetWidth;
+          main.classList.remove('fade-blur-out');
           if (push) history.pushState({ page }, '', `#${page}`);
         })
         .catch(() => {
           main.innerHTML = '<p style="color:red">Page not found.</p>';
-          main.classList.remove('fade-out');
+          main.classList.remove('fade-blur-out');
         });
     }, 400);
   }
@@ -116,3 +117,9 @@ document.addEventListener('DOMContentLoaded', function () {
     loadPage(page, false);
   });
 });
+
+document.getElementById('main-content').classList.add('fade-blur-out');
+// Wait a second, then remove it:
+setTimeout(() => {
+  document.getElementById('main-content').classList.remove('fade-blur-out');
+}, 1000);
