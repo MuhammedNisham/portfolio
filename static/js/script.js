@@ -124,4 +124,23 @@ setTimeout(() => {
   document.getElementById('main-content').classList.remove('fade-blur-out');
 }, 1000);
 
+// Only for tab switching in resume
+document.addEventListener('DOMContentLoaded', function() {
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.tab-content');
 
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Remove active from all tabs
+      tabs.forEach(t => t.classList.remove('active'));
+      // Add active to clicked tab
+      this.classList.add('active');
+      // Hide all contents
+      contents.forEach(c => c.classList.remove('active'));
+      // Show only the selected content
+      const tabId = this.getAttribute('data-tab');
+      const content = document.getElementById(tabId);
+      if (content) content.classList.add('active');
+    });
+  });
+});
