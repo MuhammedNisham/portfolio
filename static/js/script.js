@@ -1,5 +1,4 @@
-
-// Javascript for galaxy
+// Galaxy background animation
 const canvas = document.getElementById('galaxy');
 const ctx = canvas.getContext('2d');
 
@@ -12,7 +11,6 @@ const PARTICLE_COUNT = 160; // Number of "cosmic dust" particles
 const particles = [];
 
 function randomColor() {
-  // Soft white/blue/purple tones like cosmic dust
   const colors = [
     'rgba(255,255,255,0.5)',
     'rgba(180,200,255,0.35)',
@@ -26,8 +24,8 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
   particles.push({
     x: Math.random() * w,
     y: Math.random() * h,
-    r: Math.random() * 1.8 + 0.6, // radius: 0.25px to 1.35px
-    dx: (Math.random() - 0.5) * 0.17, // slow drift speed
+    r: Math.random() * 1.8 + 0.6,
+    dx: (Math.random() - 0.5) * 0.17,
     dy: (Math.random() - 0.5) * 0.17,
     color: randomColor()
   });
@@ -49,8 +47,6 @@ function update() {
   for (let p of particles) {
     p.x += p.dx;
     p.y += p.dy;
-
-    // wrap around edges
     if (p.x < 0) p.x = w;
     if (p.x > w) p.x = 0;
     if (p.y < 0) p.y = h;
@@ -73,8 +69,24 @@ window.addEventListener('resize', () => {
 
 animate();
 
+// -------- SPA navigation with blur transition --------
 
-// SPA navigation with blur transition
+function initResumeTabs() {
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.tab-content');
+  if (tabs.length === 0) return;
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      contents.forEach(c => c.classList.remove('active'));
+      const tabId = this.getAttribute('data-tab');
+      const content = document.getElementById(tabId);
+      if (content) content.classList.add('active');
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   function loadPage(page, push = true) {
     const main = document.getElementById('main-content');
@@ -87,6 +99,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(html => {
           main.innerHTML = html;
+          // Initialize resume tabs only for resume page
+          if (page === 'resume') {
+            initResumeTabs();
+          }
           void main.offsetWidth;
           main.classList.remove('fade-blur-out');
           if (push) history.pushState({ page }, '', `#${page}`);
@@ -118,29 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Optional: fade-in effect after load
 document.getElementById('main-content').classList.add('fade-blur-out');
-// Wait a second, then remove it:
 setTimeout(() => {
   document.getElementById('main-content').classList.remove('fade-blur-out');
 }, 1000);
-
-// Only for tab switching in resume
-document.addEventListener('DOMContentLoaded', function() {
-  const tabs = document.querySelectorAll('.tab');
-  const contents = document.querySelectorAll('.tab-content');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', function() {
-      // Remove active from all tabs
-      tabs.forEach(t => t.classList.remove('active'));
-      // Add active to clicked tab
-      this.classList.add('active');
-      // Hide all contents
-      contents.forEach(c => c.classList.remove('active'));
-      // Show only the selected content
-      const tabId = this.getAttribute('data-tab');
-      const content = document.getElementById(tabId);
-      if (content) content.classList.add('active');
-    });
-  });
-});
