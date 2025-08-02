@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
           main.innerHTML = '<p style="color:red">Page not found.</p>';
           main.classList.remove('fade-blur-out');
         });
-    }, 400);
+    }, 300);
   }
 
   // Initial load
@@ -123,3 +123,5 @@ document.getElementById('main-content').classList.add('fade-blur-out');
 setTimeout(() => {
   document.getElementById('main-content').classList.remove('fade-blur-out');
 }, 1000);
+
+

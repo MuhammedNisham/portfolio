@@ -9,10 +9,10 @@ body{
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: auto;
   position: relative;
   /* Animated galactic gradient background */
-  background: linear-gradient(-45deg, #0f2027, #1a2771, #000428, #434343);
+  background: linear-gradient(-45deg, #0f2027, #162160, #000428, #434343);
   background-size: 400% 400%;
   animation: gradientMove 20s ease-in-out infinite;
 }
@@ -72,7 +72,7 @@ header{
 main{
   /* all: unset !important; */
   display: block !important;
-  margin-top: 8%;
+  margin-top: 5%;
   color: white !important;
   position: relative;
   min-height: 70vh;
@@ -125,5 +125,18 @@ main{
 }
 #main-content.fade-blur.fade-blur-out {
   opacity: 0;
-  filter: blur(24px);
+  filter: blur(8px);
 }
+
+/* styling for card */
+.card-body {
+  background-color: #162160;
+  color: white;
+  transition-duration: .5s;
+}
+.card-body:hover{
+  background-color: #000428;
+  color: rgb(42, 181, 116);
+  transition-duration: .5s;
+}
+
